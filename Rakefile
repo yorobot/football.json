@@ -66,7 +66,7 @@ require_relative 'scripts/json'
 
 DB_CONFIG = {
   'adapter'  =>  'sqlite3',
-  'database' =>  './build/sport.db'
+  'database' =>  "#{BUILD_DIR}/sport.db"
 }
 
 
@@ -80,14 +80,14 @@ task :default => :build
 
 
 task :clean do
-  db_adapter  = DB_CONFIG[ 'adapter' ]
-  db_database = DB_CONFIG[ 'database' ]
+  adapter  = DB_CONFIG[ 'adapter' ]
+  database = DB_CONFIG[ 'database' ]
 
   ### for sqlite3 delete/remove single-file database
-  if db_adapter == 'sqlite3' && db_database != ':memory:'
-     rm db_database if File.exists?( db_database )
+  if adapter == 'sqlite3' && database != ':memory:'
+     rm database  if File.exists?( database )
   else
-    puts "  clean: do nothing; no clean steps configured for db adapter >#{db_adapter}<"
+    puts "  clean: do nothing; no clean steps configured for db adapter >#{adapter}<"
   end
 end
 
@@ -97,10 +97,10 @@ task :env => BUILD_DIR do
   pp DB_CONFIG
   ActiveRecord::Base.establish_connection( DB_CONFIG )
 
-  db_adapter  = DB_CONFIG[ 'adapter' ]
-  db_database = DB_CONFIG[ 'database' ]
+  adapter  = DB_CONFIG[ 'adapter' ]
+  database = DB_CONFIG[ 'database' ]
 
-  if db_adapter == 'sqlite3' && db_database != ':memory:'
+  if adapter == 'sqlite3' && database != ':memory:'
     puts "*** sqlite3 database on filesystem; try speedup..."
     ## try to speed up sqlite
     ## see http://www.sqlite.org/pragma.html

@@ -1,0 +1,45 @@
+*.gem
+*.rbc
+.bundle
+.config
+coverage
+InstalledFiles
+lib/bundler/man
+pkg
+rdoc
+spec/reports
+test/tmp
+test/version_tmp
+tmp
+
+# YARD artifacts
+.yardoc
+_yardoc
+doc/
+
+
+##############
+# exclude sqlite dbs
+*.db
+
+###############
+# exclude build folder
+build
+build/
+
+#################
+# exclude output folder
+o
+o/
+
+
+
+#####################
+# exclude git/gitti logs
+errors.log
+
+####
+#  note:
+#   exclude gemfile.lock for now (is different for now on every os/platform)
+
+Gemfile.lock

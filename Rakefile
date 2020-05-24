@@ -76,10 +76,7 @@ DB_CONFIG = {
 ## DB_CONFIG = DB_HASH[ 'default' ]    ## for now just always use default section/entry
 
 
-
 task :default => :build
-
-directory BUILD_DIR
 
 
 task :clean do
@@ -88,14 +85,13 @@ task :clean do
 
   ### for sqlite3 delete/remove single-file database
   if db_adapter == 'sqlite3' && db_database != ':memory:'
-     db_database =  DB_CONFIG[ 'database' ]
      rm db_database if File.exists?( db_database )
   else
     puts "  clean: do nothing; no clean steps configured for db adapter >#{db_adapter}<"
   end
 end
 
-
+directory BUILD_DIR
 
 task :env => BUILD_DIR do
   pp DB_CONFIG
@@ -176,7 +172,7 @@ end
 
 task :json => :config  do       ## for in-memory depends on all for now - ok??
   out_root = if debug? 
-               './build' 
+               BUILD_DIR
              else
                FOOTBALL_JSON_DIR
              end
@@ -189,6 +185,4 @@ task :json => :config  do       ## for in-memory depends on all for now - ok??
   # gen_json( 'es',   out_root: out_root )
   gen_json( 'it.1',   out_root: out_root )
 end
-
-
 

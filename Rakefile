@@ -21,24 +21,13 @@ require 'logutils/activerecord' ## add db logging
 
 
 def debug?
-  debug_value = ENV['DEBUG']
-  if debug_value &&  ['true', 't', 'yes', 'y'].include?( debug_value.downcase )
+  debug = ENV['DEBUG']
+  if debug &&  ['true', 't', 'yes', 'y'].include?( debug.downcase )
     true
   else
     false
   end
 end
-
-
-def load_tasks
-  Dir.glob('./tasks/**/*.rake').each do |r|
-    puts "  importing task >#{r}<..."
-    import r      ## why use import and not load? load works with .rake extension?
-    # see blog.smartlogicsolutions.com/2009/05/26/including-external-rake-files-in-your-projects-rakefile-keep-your-rake-tasks-organized/
-  end
-end
-
-
 
 
 
@@ -130,42 +119,23 @@ end
 
 task :config  => :env  do
   logger = LogUtils::Logger.root
-  # logger.level = :info
 
   ## log all warns, errors, fatals to db
   LogDb.setup
   logger.warn "Rakefile - #{Time.now}"  # say hello; log to db (warn level min)
 
-  ## try first
-  ### use DEBUG=t or DEBUG=f
-  ### or alternative LOG|LOGLEVEL=debug|info|warn|error
-  debug_key = ENV['DEBUG']
-  if debug_key.nil?
-    ## try log_key as "fallback"
-    ##  - env variable that lets you configure log level
-    log_key = ENV['LOG'] || ENV['LOGLEVEL'] || 'debug'
-    puts "  using LOGLEVEL >#{log_key}<"
-    logger.level = log_key.to_sym
-  else
-    if ['true', 't', 'yes', 'y'].include?( debug_key.downcase )
-      logger.level = :debug
-    else
-      logger.level = :info
-    end
-  end
+  ## use DEBUG=t or DEBUG=f
+  logger.level = if debug? 
+                   :debug 
+                 else
+                   :info
+                 end
 end
 
 
 task :create => :env do
   SportDb.create_all
 end
-
-
-
-############################################
-# add more tasks (keep build script modular)
-
-load_tasks()   ## e.g. see scripts/rake.rb -- (auto-)imports ./tasks/**/*.rake
 
 
 #########################################################
@@ -180,6 +150,14 @@ load_tasks()   ## e.g. see scripts/rake.rb -- (auto-)imports ./tasks/**/*.rake
 #  $ rake build  DATA=en
 #  etc.
 
+task :it => :config do
+  SportDb.read( IT_DIR )   ## add season: '2019/20' - why? why not?
+end
+
+## note: :ru not working for now (fix date e.g. [])
+task :all => [:at,:de,:en,:es,:it] do
+end
+
 
 DATA_KEY = ENV['DATA'] || ENV['DATASET'] || 'all'     ## note: was 'worldcup' default DATA_KEY
 puts "  using DATA_KEY >#{DATA_KEY}<"
@@ -189,18 +167,6 @@ task :read => [:config, DATA_KEY.to_sym] do
 end
 
 
-task :it => :config do
-  SportDb.read( IT_DIR )   ## add season: '2019/20' - why? why not?
-end
-
-
-###
-## from "new" update build script
-
-## note: :ru not working for now (fix date e.g. [])
-task :all => [:at,:de,:en,:es,:it] do
-end
-
 
 desc 'build football.db from scratch (default)'
 task :build => [:clean, :create, :read] do
@@ -209,7 +175,11 @@ end
 
 
 task :json => :config  do       ## for in-memory depends on all for now - ok??
-  out_root = debug? ? './build' : FOOTBALL_JSON_DIR
+  out_root = if debug? 
+               './build' 
+             else
+               FOOTBALL_JSON_DIR
+             end
 
   # gen_json( 'at',   out_root: out_root )
   # gen_json( 'at.2', out_root: out_root )

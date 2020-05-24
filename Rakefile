@@ -158,14 +158,8 @@ end
 DATA_KEY = ENV['DATA'] || ENV['DATASET'] || 'all'     ## note: was 'worldcup' default DATA_KEY
 puts "  using DATA_KEY >#{DATA_KEY}<"
 
-task :read => [:config, DATA_KEY.to_sym] do
-  # nothing here
-end
-
-
-
 desc 'build football.db from scratch (default)'
-task :build => [:clean, :create, :read] do
+task :build => [:clean, :create, DATA_KEY.to_sym] do
   puts 'Done.'
 end
 

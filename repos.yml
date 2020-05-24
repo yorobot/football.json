@@ -1,0 +1,20 @@
+####################
+#  checkout skripts (auto-update machinery)
+yorobot:
+- football.json      ## incl. self
+- logs
+
+#####################
+# football.db - open football
+openfootball:
+## add clubs
+- austria
+- england
+- deutschland
+- espana
+- italy
+- france
+## add club cups
+- europe-champions-league
+## add (auto-generated) json datasets
+- football.json

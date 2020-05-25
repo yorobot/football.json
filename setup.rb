@@ -1,15 +1,14 @@
-# encoding: utf-8
-
-
 require 'gitti'
 require 'gitti/sync'
+
 
 include Gitti    ## lets you use Git, GitError, etc.
 
 
-## todo/fix: change to /Sites
+# assuming your working folder is `yorobot/football.json`
+# where you have cloned this very repo
 
-sync = GitSync.new( '../..' )   ## '/src' or '/Sites' was /auto
+sync = GitSync.new( '../..' )
 
 repos = GitRepoSet.from_file( './repos.yml' )
 sync.sync( repos )

@@ -1,7 +1,44 @@
 # football.json Scripts
 
 
-## Setup Skripts
+## Step 1 - Sync / Pull / Clone All Datasets
+
+**Alternative I - Use Git Command Line**
+
+```
+$ mkdir yorobot
+$ cd    yorobot
+$ git clone https://github.com/yorobot/football.json
+
+$ cd ..
+$ mkdir openfootball
+$ cd    openfootball
+$ git clone https://github.com/openfootball/england
+$ git clone https://github.com/openfootball/deutschland
+$ git clone https://github.com/openfootball/austria
+$ git clone https://github.com/openfootball/espana
+$ git clone https://github.com/openfootball/italy
+# ...
+$ git clone https://github.com/openfootball/football.json
+```
+
+resulting in:
+
+```
+/yorobot
+   /football.json
+/openfootball
+   /england
+   /deutschland
+   /austria
+   /espana
+   /italy
+   # ...
+   /football.json
+```
+
+
+**Alternative II - Use the Gitti Setup Script**
 
 Use
 
@@ -9,6 +46,45 @@ Use
 $ ruby ./setup.rb
 ```
 
-to setup (sync e.g. clone/pull) all repos to the `../..` folder.
+to setup (sync e.g. clone/pull) all repos (configured in [`repos.yml`](repos.yml))
+to the `../..` (root) folder
+assuming your working folder is `yorobot/football.json`
+where you have cloned this very repo.
 
+
+## Step 2 - Build sport.db From the Sources
+
+Use
+
+```
+$ rake build
+```
+
+to build a fresh copy from scratch / zero.
+
+
+## Step 3 - Generate football.json Datasets
+
+For testing / debugging use:
+
+```
+$ rake json DEBUG=t
+```
+
+that will write all datasets into the `./build` directory.
+And use
+
+```
+$ rake json
+```
+
+for writing into the `openfootball/football.json` directory.
+
+
+
+## Questions? Comments?
+
+Send them along to the
+[Open Sports & Friends Forum/Mailing List](http://groups.google.com/group/opensport).
+Thanks!
 

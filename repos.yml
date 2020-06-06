@@ -4,9 +4,18 @@ yorobot:
 - football.json      ## incl. self
 - logs
 
+###############
+#  use latest sportdb machinery (from source)
+sportdb:
+- sport.db
+- football.db
+
 #####################
 # football.db - open football
 openfootball:
+## add basics
+- leagues
+- clubs
 ## add clubs
 - austria
 - england

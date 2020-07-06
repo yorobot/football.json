@@ -3,6 +3,7 @@
 yorobot:
 - football.json      ## incl. self
 - logs
+- sport.db.more      ## JsonWriter
 
 ###############
 #  use latest sportdb machinery (from source)

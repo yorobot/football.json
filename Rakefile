@@ -113,10 +113,11 @@ end
 #  $ rake build  DATA=en
 #  etc.
 
+
 DATASETS.each do |key,h|
   task :"read_#{key}" => :config do
-    SportDb.read( h[:path] )
-    ## SportDb.read( h[:path], '2019/20' )
+    ## SportDb.read( h[:path] )
+    SportDb.read( h[:path], season: '2019/20' )  ## only incl. latest season for now
   end
 end
 
@@ -143,8 +144,8 @@ task :json => :config  do       ## for in-memory depends on all for now - ok??
                FOOTBALL_JSON_DIR
              end
 
-  # gen_json( 'at.1', out_root: out_root )   ###  todo/fix: check for stages starting in 2018/19
-  # gen_json( 'at.2', out_root: out_root )
+  gen_json( 'at.1',   out_root: out_root )   ###  todo/fix: check for stages starting in 2018/19
+  gen_json( 'at.2',   out_root: out_root )
 
   gen_json( 'de.1',   out_root: out_root )
   gen_json( 'de.2',   out_root: out_root )

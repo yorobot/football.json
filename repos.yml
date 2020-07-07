@@ -24,6 +24,7 @@ openfootball:
 - espana
 - italy
 - france
+- world     ## incl. switzerland, turkey, etc.
 ## add club cups
 - europe-champions-league
 ## add (auto-generated) json datasets

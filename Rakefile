@@ -12,12 +12,14 @@ require_relative 'boot'
 
 ################
 # club country repos
-AT_DIR  = "#{OPENFOOTBALL_DIR}/austria"
-DE_DIR  = "#{OPENFOOTBALL_DIR}/deutschland"
-EN_DIR  = "#{OPENFOOTBALL_DIR}/england"
-ES_DIR  = "#{OPENFOOTBALL_DIR}/espana"
-IT_DIR  = "#{OPENFOOTBALL_DIR}/italy"
-FR_DIR  = "#{OPENFOOTBALL_DIR}/france"
+AT_DIR    = "#{OPENFOOTBALL_DIR}/austria"
+DE_DIR    = "#{OPENFOOTBALL_DIR}/deutschland"
+EN_DIR    = "#{OPENFOOTBALL_DIR}/england"
+ES_DIR    = "#{OPENFOOTBALL_DIR}/espana"
+IT_DIR    = "#{OPENFOOTBALL_DIR}/italy"
+FR_DIR    = "#{OPENFOOTBALL_DIR}/france"
+WORLD_DIR = "#{OPENFOOTBALL_DIR}/world"   # incl. switzerland, turkey, etc.
+
 
 ##
 ## todo/fix:  remove lang  (rec[2]) - always use league (country) for auto-config lang - why? why not?
@@ -27,6 +29,7 @@ DATASETS = { at:    { path: AT_DIR,    lang: 'de'}, ## domestic clubs
              es:    { path: ES_DIR,    lang: 'es'},
              it:    { path: IT_DIR,    lang: 'it'},
              fr:    { path: FR_DIR,    lang: 'fr'},
+             world: { path: WORLD_DIR },
            }
 
 ##  used by json export/generate task
@@ -162,6 +165,12 @@ task :json => :config  do       ## for in-memory depends on all for now - ok??
   gen_json( 'it.1',   out_root: out_root )
 
   gen_json( 'fr.1',   out_root: out_root )
+
+  gen_json( 'ch.1',   out_root: out_root ) # Switzerland
+  gen_json( 'ch.2',   out_root: out_root )
+
+  gen_json( 'tr.1',   out_root: out_root ) # Turkey
+  gen_json( 'tr.2',   out_root: out_root )
 end
 
 

@@ -14,8 +14,7 @@ LEAGUE_TO_BASENAME = {
 def build_clubs( event )
   clubs = []
   event.teams.each do |team|
-    clubs << { key:  team.key,
-               name: team.name,
+    clubs << { name: team.name,
                code: team.code }
   end
 
@@ -32,17 +31,9 @@ def build_matches( event )
   event.rounds.each do |round|
     matches = []
     round.matches.each do |match|
-      matches << { date: match.date.strftime( '%Y-%m-%d'),
-                   team1: {
-                     key:  match.team1.key,
-                     name: match.team1.name,
-                     code: match.team1.code
-                   },
-                   team2: {
-                     key:  match.team2.key,
-                     name: match.team2.name,
-                     code: match.team2.code
-                   },
+      matches << { date:  match.date.strftime( '%Y-%m-%d'),
+                   team1: match.team1.name,
+                   team2: match.team2.name,
                    score1: match.score1,
                    score2: match.score2 }
     end

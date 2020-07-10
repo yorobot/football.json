@@ -18,17 +18,17 @@ EN_DIR    = "#{OPENFOOTBALL_DIR}/england"
 ES_DIR    = "#{OPENFOOTBALL_DIR}/espana"
 IT_DIR    = "#{OPENFOOTBALL_DIR}/italy"
 FR_DIR    = "#{OPENFOOTBALL_DIR}/france"
-WORLD_DIR = "#{OPENFOOTBALL_DIR}/world"   # incl. switzerland, turkey, etc.
+RU_DIR    = "#{OPENFOOTBALL_DIR}/russia"
+WORLD_DIR = "#{OPENFOOTBALL_DIR}/world"   # incl. netherlands, portugal, switzerland, turkey, etc.
 
 
-##
-## todo/fix:  remove lang  (rec[2]) - always use league (country) for auto-config lang - why? why not?
-DATASETS = { at:    { path: AT_DIR,    lang: 'de'}, ## domestic clubs
-             de:    { path: DE_DIR,    lang: 'de'},
-             en:    { path: EN_DIR,    lang: 'en'},
-             es:    { path: ES_DIR,    lang: 'es'},
-             it:    { path: IT_DIR,    lang: 'it'},
-             fr:    { path: FR_DIR,    lang: 'fr'},
+DATASETS = { at:    { path: AT_DIR }, ## domestic clubs
+             de:    { path: DE_DIR },
+             en:    { path: EN_DIR },
+             es:    { path: ES_DIR },
+             it:    { path: IT_DIR },
+             fr:    { path: FR_DIR },
+             ru:    { path: RU_DIR },
              world: { path: WORLD_DIR },
            }
 
@@ -163,8 +163,18 @@ task :json => :config  do       ## for in-memory depends on all for now - ok??
   gen_json( 'es.2',   out_root: out_root )
 
   gen_json( 'it.1',   out_root: out_root )
+  gen_json( 'it.2',   out_root: out_root )
 
   gen_json( 'fr.1',   out_root: out_root )
+  gen_json( 'fr.2',   out_root: out_root )
+
+  gen_json( 'ru.1',   out_root: out_root )
+  gen_json( 'ru.2',   out_root: out_root )
+
+  ## from world/ datasets
+  gen_json( 'nl.1',   out_root: out_root ) # Netherlands
+
+  gen_json( 'pt.1',   out_root: out_root ) # Portugal
 
   gen_json( 'ch.1',   out_root: out_root ) # Switzerland
   gen_json( 'ch.2',   out_root: out_root )

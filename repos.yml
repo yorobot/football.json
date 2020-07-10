@@ -24,6 +24,8 @@ openfootball:
 - espana
 - italy
 - france
+- russia
+- brazil
 - world     ## incl. switzerland, turkey, etc.
 ## add club cups
 - europe-champions-league

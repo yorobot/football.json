@@ -14,6 +14,7 @@ end
 SPORTDB_DIR      = '../../sportdb'     # path to libs
 
 ## note: use the local version of sportdb gems
+$LOAD_PATH.unshift( File.expand_path( "#{SPORTDB_DIR}/sport.db/sportdb-langs/lib" ))
 $LOAD_PATH.unshift( File.expand_path( "#{SPORTDB_DIR}/sport.db/sportdb-formats/lib" ))
 
 # $LOAD_PATH.unshift( File.expand_path( "#{SPORTDB_DIR}/football.db/footballdb-leagues/lib" ))

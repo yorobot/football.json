@@ -21,16 +21,24 @@ FR_DIR    = "#{OPENFOOTBALL_DIR}/france"
 RU_DIR    = "#{OPENFOOTBALL_DIR}/russia"
 WORLD_DIR = "#{OPENFOOTBALL_DIR}/world"   # incl. netherlands, portugal, switzerland, turkey, etc.
 
+BR_DIR    = "#{OPENFOOTBALL_DIR}/brazil"
+## use champs dir - cl is country code for Chile!! - why? why not?
+CL_DIR    = "#{OPENFOOTBALL_DIR}/europe-champions-league"
 
-DATASETS = { at:    { path: AT_DIR }, ## domestic clubs
-             de:    { path: DE_DIR },
-             en:    { path: EN_DIR },
-             es:    { path: ES_DIR },
-             it:    { path: IT_DIR },
-             fr:    { path: FR_DIR },
-             ru:    { path: RU_DIR },
-             world: { path: WORLD_DIR },
-           }
+DATASETS = {
+#             at:    { path: AT_DIR }, ## domestic clubs
+#             de:    { path: DE_DIR },
+#             en:    { path: EN_DIR },
+#             es:    { path: ES_DIR },
+#             it:    { path: IT_DIR },
+#             fr:    { path: FR_DIR },
+#             ru:    { path: RU_DIR },
+#             world: { path: WORLD_DIR },
+
+             br:    { path: BR_DIR },
+            ## use champs?? - cl is country code for Chile!! - why? why not?
+             cl:    { path: CL_DIR },
+}
 
 ##  used by json export/generate task
 FOOTBALL_JSON_DIR = "#{OPENFOOTBALL_DIR}/football.json"
@@ -119,8 +127,9 @@ end
 
 DATASETS.each do |key,h|
   task :"read_#{key}" => :config do
-    ## SportDb.read( h[:path] )
-    SportDb.read( h[:path], season: '2019/20' )  ## only incl. latest season for now
+     ## SportDb.read( h[:path] )
+     ## note: only incl. latest season for now
+     SportDb.read( h[:path], season: ['2019', '2019/20', '2020'] )
   end
 end
 
@@ -137,7 +146,8 @@ end
 
 
 
-require_relative 'scripts/json'    ## pulls in gen_json helper
+require_relative 'scripts/json'         ## pulls in gen_json helper
+require_relative 'scripts/json_more'    ## pulls in gen_json helper
 
 
 task :json => :config  do       ## for in-memory depends on all for now - ok??
@@ -146,7 +156,7 @@ task :json => :config  do       ## for in-memory depends on all for now - ok??
              else
                FOOTBALL_JSON_DIR
              end
-
+=begin
   gen_json( 'at.1',   out_root: out_root )   ###  todo/fix: check for stages starting in 2018/19
   gen_json( 'at.2',   out_root: out_root )
 
@@ -181,6 +191,15 @@ task :json => :config  do       ## for in-memory depends on all for now - ok??
 
   gen_json( 'tr.1',   out_root: out_root ) # Turkey
   gen_json( 'tr.2',   out_root: out_root )
+=end
+
+  ###################
+  ## more
+  gen_json( 'br.1',   out_root: out_root )
+
+  #########
+  ## clubs int'l  (incl. group/group phase)
+  gen_json_clubs_intl( 'uefa.cl', out_root: out_root )
 end
 
 

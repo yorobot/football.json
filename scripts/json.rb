@@ -8,6 +8,7 @@ LEAGUE_TO_BASENAME = {
 
   'world' => 'worldcup',
   ## 'cl'    => 'cl',    ## keep cl as is :-)
+  'uefa.cl' => 'cl',
 }
 
 

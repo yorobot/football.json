@@ -283,15 +283,13 @@ end
 ###
 ##  fix/todo: move to its own file e.g. json_clubs_intl - why? why not?
 
-def gen_json_clubs_intl( league_key, opts={} )
-
-  out_root = opts[:out_root] || './build'
+def gen_json_clubs_intl( league_key, out_root: )
 
   league = SportDb::Model::League.find_by_key!( league_key )
 
   league.events.each do |event|
      puts "** event:"
-     pp event.title
+     pp event.name
      pp event.season
      pp event.league
      puts "teams.count: #{event.teams.count}"
@@ -302,14 +300,14 @@ def gen_json_clubs_intl( league_key, opts={} )
      clubs = []
      event.teams.each do |team|
        clubs << { key:  team.key,
-                  name: team.title,
+                  name: team.name,
                   code: team.code,
                   country: { key: team.country.key, name: team.country.name }
                 }
      end
 
      hash_clubs = {
-      name: event.title,
+      name: event.name,
       clubs: clubs
      }
 
@@ -327,11 +325,11 @@ def gen_json_clubs_intl( league_key, opts={} )
                     country: { key: team.country.key, name: team.country.name }
                   }
        end
-       groups << { name: group.title, teams: teams }
+       groups << { name: group.name, teams: teams }
      end
 
      hash_groups = {
-      name: event.title,
+      name: event.name,
       groups: groups
      }
 
@@ -342,38 +340,38 @@ def gen_json_clubs_intl( league_key, opts={} )
      rounds = []
      event.rounds.each do |round|
        matches = []
-       round.games.each do |game|
-         m = { date: game.play_at.strftime( '%Y-%m-%d'),
+       round.matches.each do |match|
+         m = { date: match.date.strftime( '%Y-%m-%d'),
                       team1: {
-                        key:  game.team1.key,
-                        name: game.team1.title,
-                        code: game.team1.code
+                        key:  match.team1.key,
+                        name: match.team1.name,
+                        code: match.team1.code
                       },
                       team2: {
-                        key:  game.team2.key,
-                        name: game.team2.title,
-                        code: game.team2.code
+                        key:  match.team2.key,
+                        name: match.team2.name,
+                        code: match.team2.code
                       },
-                      score1: game.score1,
-                      score2: game.score2  }
+                      score1: match.score1,
+                      score2: match.score2  }
 
-        unless game.goals.empty?
-          goals1, goals2 = gen_json_goals( game )
+        unless match.goals.empty?
+          goals1, goals2 = gen_json_goals( match )
           m[ :goals1 ] = goals1
           m[ :goals2 ] = goals2
         end
 
-        if game.group
-          m[ :group ]  =  game.group.title
+        if match.group
+          m[ :group ]  =  match.group.name
         end
 
         matches << m
        end
-       rounds << { name: round.title, matches: matches }
+       rounds << { name: round.name, matches: matches }
      end
 
      hash_matches =  {
-       name: event.title,
+       name: event.name,
        rounds: rounds
      }
 
@@ -386,7 +384,7 @@ def gen_json_clubs_intl( league_key, opts={} )
      ##  -- check for remapping (e.g. add .1); if not found use league key as is
      league_basename = LEAGUE_TO_BASENAME[ event.league.key ] || event.league.key
 
-     season_basename = event.season.title.sub('/', '-')  ## e.g. change 2014/15 to 2014-15
+     season_basename = event.season.name.sub('/', '-')  ## e.g. change 2014/15 to 2014-15
 
 
      out_dir   = "#{out_root}/#{season_basename}"

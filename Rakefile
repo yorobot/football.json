@@ -129,7 +129,8 @@ DATASETS.each do |key,h|
   task :"read_#{key}" => :config do
      ## SportDb.read( h[:path] )
      ## note: only incl. latest season for now
-     SportDb.read( h[:path], season: ['2019', '2019/20', '2020'] )
+     SportDb.read( h[:path], season: ['2018/19', '2019',
+                                      '2019/20', '2020'] )
   end
 end
 
@@ -144,10 +145,6 @@ task :build => [:clean, :create, :"read_#{DATA_KEY}"] do
 end
 
 
-
-
-require_relative 'scripts/json'         ## pulls in gen_json helper
-require_relative 'scripts/json_more'    ## pulls in gen_json helper
 
 
 task :json => :config  do       ## for in-memory depends on all for now - ok??
@@ -195,11 +192,11 @@ task :json => :config  do       ## for in-memory depends on all for now - ok??
 
   ###################
   ## more
-  gen_json( 'br.1',   out_root: out_root )
+  SportDb::JsonExporter.export( 'br.1',  out_root: out_root )
 
   #########
   ## clubs int'l  (incl. group/group phase)
-  gen_json_clubs_intl( 'uefa.cl', out_root: out_root )
+  SportDb::JsonExporter.export_clubs_intl( 'uefa.cl', out_root: out_root )
 end
 
 

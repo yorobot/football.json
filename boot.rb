@@ -34,3 +34,8 @@ OPENFOOTBALL_DIR = "../../openfootball"
 ## use (switch to) latest "external" datasets
 SportDb::Import.config.leagues_dir = "#{OPENFOOTBALL_DIR}/leagues"
 SportDb::Import.config.clubs_dir   = "#{OPENFOOTBALL_DIR}/clubs"
+
+
+### add exporters (e.g. json)
+$LOAD_PATH.unshift( File.expand_path( "../sport.db.more/sportdb-exporters/lib" ))
+require 'sportdb/exporters'

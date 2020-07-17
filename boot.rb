@@ -25,9 +25,13 @@ $LOAD_PATH.unshift( File.expand_path( "#{SPORTDB_DIR}/sport.db/sportdb-models/li
 $LOAD_PATH.unshift( File.expand_path( "#{SPORTDB_DIR}/sport.db/sportdb-sync/lib" ))
 $LOAD_PATH.unshift( File.expand_path( "#{SPORTDB_DIR}/sport.db/sportdb-readers/lib" ))
 
-
-
 require 'sportdb/readers'
+
+### add exporters (e.g. json)
+$LOAD_PATH.unshift( File.expand_path( "../sport.db.more/sportdb-exporters/lib" ))
+require 'sportdb/exporters'
+
+
 
 OPENFOOTBALL_DIR = "../../openfootball"
 
@@ -36,6 +40,3 @@ SportDb::Import.config.leagues_dir = "#{OPENFOOTBALL_DIR}/leagues"
 SportDb::Import.config.clubs_dir   = "#{OPENFOOTBALL_DIR}/clubs"
 
 
-### add exporters (e.g. json)
-$LOAD_PATH.unshift( File.expand_path( "../sport.db.more/sportdb-exporters/lib" ))
-require 'sportdb/exporters'

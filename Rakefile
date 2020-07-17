@@ -12,18 +12,17 @@ require_relative 'boot'
 
 ################
 # club country repos
-AT_DIR    = "#{OPENFOOTBALL_DIR}/austria"
-DE_DIR    = "#{OPENFOOTBALL_DIR}/deutschland"
-EN_DIR    = "#{OPENFOOTBALL_DIR}/england"
-ES_DIR    = "#{OPENFOOTBALL_DIR}/espana"
-IT_DIR    = "#{OPENFOOTBALL_DIR}/italy"
-FR_DIR    = "#{OPENFOOTBALL_DIR}/france"
-RU_DIR    = "#{OPENFOOTBALL_DIR}/russia"
-WORLD_DIR = "#{OPENFOOTBALL_DIR}/world"   # incl. netherlands, portugal, switzerland, turkey, etc.
+AT_DIR        = "#{OPENFOOTBALL_DIR}/austria"
+DE_DIR        = "#{OPENFOOTBALL_DIR}/deutschland"
+EN_DIR        = "#{OPENFOOTBALL_DIR}/england"
+ES_DIR        = "#{OPENFOOTBALL_DIR}/espana"
+IT_DIR        = "#{OPENFOOTBALL_DIR}/italy"
+FR_DIR        = "#{OPENFOOTBALL_DIR}/france"
+RU_DIR        = "#{OPENFOOTBALL_DIR}/russia"
+WORLD_DIR     = "#{OPENFOOTBALL_DIR}/world"   # incl. netherlands, portugal, switzerland, turkey, etc.
 
-BR_DIR    = "#{OPENFOOTBALL_DIR}/brazil"
-## use champs dir - cl is country code for Chile!! - why? why not?
-CL_DIR    = "#{OPENFOOTBALL_DIR}/europe-champions-league"
+BR_DIR        = "#{OPENFOOTBALL_DIR}/brazil"
+EUROPE_CL_DIR = "#{OPENFOOTBALL_DIR}/europe-champions-league"
 
 DATASETS = {
 #             at:    { path: AT_DIR }, ## domestic clubs
@@ -36,8 +35,8 @@ DATASETS = {
 #             world: { path: WORLD_DIR },
 
              br:    { path: BR_DIR },
-            ## use champs?? - cl is country code for Chile!! - why? why not?
-             cl:    { path: CL_DIR },
+            ## note: reserve cl for country code for Chile!! - why? why not?
+             europe_cl:  { path: EUROPE_CL_DIR },
 }
 
 ##  used by json export/generate task
@@ -196,7 +195,8 @@ task :json => :config  do       ## for in-memory depends on all for now - ok??
 
   #########
   ## clubs int'l  (incl. group/group phase)
-  SportDb::JsonExporter.export_clubs_intl( 'uefa.cl', out_root: out_root )
+  SportDb::JsonExporter.export( 'uefa.cl.quali', out_root: out_root )
+  SportDb::JsonExporter.export( 'uefa.cl',       out_root: out_root )
 end
 
 

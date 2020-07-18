@@ -25,14 +25,14 @@ BR_DIR        = "#{OPENFOOTBALL_DIR}/brazil"
 EUROPE_CL_DIR = "#{OPENFOOTBALL_DIR}/europe-champions-league"
 
 DATASETS = {
-#             at:    { path: AT_DIR }, ## domestic clubs
-#             de:    { path: DE_DIR },
-#             en:    { path: EN_DIR },
-#             es:    { path: ES_DIR },
-#             it:    { path: IT_DIR },
-#             fr:    { path: FR_DIR },
-#             ru:    { path: RU_DIR },
-#             world: { path: WORLD_DIR },
+             at:    { path: AT_DIR }, ## domestic clubs
+             de:    { path: DE_DIR },
+             en:    { path: EN_DIR },
+             es:    { path: ES_DIR },
+             it:    { path: IT_DIR },
+             fr:    { path: FR_DIR },
+             ru:    { path: RU_DIR },
+             world: { path: WORLD_DIR },
 
              br:    { path: BR_DIR },
             ## note: reserve cl for country code for Chile!! - why? why not?
@@ -53,20 +53,6 @@ DB_CONFIG = {
   adapter:   'sqlite3',
   database:  "#{BUILD_DIR}/#{DATA_KEY}.db"
 }
-# note:
-#   uses (configured) for SQLite in-memory database
-#      e.g. there's no BUILD_DIR (and database on the file system)
-#
-# DB_CONFIG = {
-#   adapter:  'sqlite3',
-#   database: ':memory:'
-# }
-
-#  load database config from external file (easier to configure/change)
-#   note: use symbolize_keys if you load config via YAML.load !!!!
-#
-# DB_HASH   = YAML.load( ERB.new( File.read( './database.yml' )).result )
-# DB_CONFIG = DB_HASH[ 'default' ].symbolize_keys    ## for now just always use default section/entry
 
 
 
@@ -128,8 +114,20 @@ DATASETS.each do |key,h|
   task :"read_#{key}" => :config do
      ## SportDb.read( h[:path] )
      ## note: only incl. latest season for now
-     SportDb.read( h[:path], season: ['2018/19', '2019',
-                                      '2019/20', '2020'] )
+     latest = ['2018/19', '2019',
+               '2019/20', '2020']
+     ## for all start with 2010/11 season for now
+     all    = ['2010/11',
+               '2011/12',
+               '2012/13',
+               '2013/14',
+               '2014/15',
+               '2015/16',
+               '2016/17',
+               '2017/18',
+               '2018/19', '2019',
+               '2019/20', '2020']
+     SportDb.read( h[:path], season: all )
   end
 end
 
@@ -152,42 +150,42 @@ task :json => :config  do       ## for in-memory depends on all for now - ok??
              else
                FOOTBALL_JSON_DIR
              end
-=begin
-  gen_json( 'at.1',   out_root: out_root )   ###  todo/fix: check for stages starting in 2018/19
-  gen_json( 'at.2',   out_root: out_root )
 
-  gen_json( 'de.1',   out_root: out_root )
-  gen_json( 'de.2',   out_root: out_root )
-  gen_json( 'de.3',   out_root: out_root )
+  SportDb::JsonExporter.export( 'at.1',   out_root: out_root )   ###  todo/fix: check for stages starting in 2018/19
+  SportDb::JsonExporter.export( 'at.2',   out_root: out_root )
 
-  gen_json( 'eng.1',  out_root: out_root )
-  gen_json( 'eng.2',  out_root: out_root )
-  gen_json( 'eng.3',  out_root: out_root )
-  gen_json( 'eng.4',  out_root: out_root )
+  SportDb::JsonExporter.export( 'de.1',   out_root: out_root )
+  SportDb::JsonExporter.export( 'de.2',   out_root: out_root )
+  SportDb::JsonExporter.export( 'de.3',   out_root: out_root )
 
-  gen_json( 'es.1',   out_root: out_root )
-  gen_json( 'es.2',   out_root: out_root )
+  SportDb::JsonExporter.export( 'eng.1',  out_root: out_root )
+  SportDb::JsonExporter.export( 'eng.2',  out_root: out_root )
+  SportDb::JsonExporter.export( 'eng.3',  out_root: out_root )
+  SportDb::JsonExporter.export( 'eng.4',  out_root: out_root )
 
-  gen_json( 'it.1',   out_root: out_root )
-  gen_json( 'it.2',   out_root: out_root )
+  SportDb::JsonExporter.export( 'es.1',   out_root: out_root )
+  SportDb::JsonExporter.export( 'es.2',   out_root: out_root )
 
-  gen_json( 'fr.1',   out_root: out_root )
-  gen_json( 'fr.2',   out_root: out_root )
+  SportDb::JsonExporter.export( 'it.1',   out_root: out_root )
+  SportDb::JsonExporter.export( 'it.2',   out_root: out_root )
 
-  gen_json( 'ru.1',   out_root: out_root )
-  gen_json( 'ru.2',   out_root: out_root )
+  SportDb::JsonExporter.export( 'fr.1',   out_root: out_root )
+  SportDb::JsonExporter.export( 'fr.2',   out_root: out_root )
+
+  SportDb::JsonExporter.export( 'ru.1',   out_root: out_root )
+  SportDb::JsonExporter.export( 'ru.2',   out_root: out_root )
 
   ## from world/ datasets
-  gen_json( 'nl.1',   out_root: out_root ) # Netherlands
+  SportDb::JsonExporter.export( 'nl.1',   out_root: out_root ) # Netherlands
 
-  gen_json( 'pt.1',   out_root: out_root ) # Portugal
+  SportDb::JsonExporter.export( 'pt.1',   out_root: out_root ) # Portugal
 
-  gen_json( 'ch.1',   out_root: out_root ) # Switzerland
-  gen_json( 'ch.2',   out_root: out_root )
+  SportDb::JsonExporter.export( 'ch.1',   out_root: out_root ) # Switzerland
+  SportDb::JsonExporter.export( 'ch.2',   out_root: out_root )
 
-  gen_json( 'tr.1',   out_root: out_root ) # Turkey
-  gen_json( 'tr.2',   out_root: out_root )
-=end
+  SportDb::JsonExporter.export( 'tr.1',   out_root: out_root ) # Turkey
+  SportDb::JsonExporter.export( 'tr.2',   out_root: out_root )
+
 
   ###################
   ## more
@@ -208,6 +206,16 @@ task :logs => :env do
      puts "  [#{log.level}] #{log.ts}  - #{log.msg}"
   end
 end
+
+
+desc 'query database (for debugging)'
+task :query => :env do
+   team = SportDb::Model::Team.find_by!( name: 'FC Santa Coloma' )
+   pp team
+   puts team.matches.count
+   pp team.matches
+end
+
 
 
 ############

@@ -22,6 +22,7 @@ RU_DIR        = "#{OPENFOOTBALL_DIR}/russia"
 WORLD_DIR     = "#{OPENFOOTBALL_DIR}/world"   # incl. netherlands, portugal, switzerland, turkey, etc.
 
 BR_DIR        = "#{OPENFOOTBALL_DIR}/brazil"
+MX_DIR        = "#{OPENFOOTBALL_DIR}/mexico"
 EUROPE_CL_DIR = "#{OPENFOOTBALL_DIR}/europe-champions-league"
 
 DATASETS = {
@@ -34,6 +35,7 @@ DATASETS = {
              ru:    { path: RU_DIR },
              world: { path: WORLD_DIR },
 
+             mx:    { path: MX_DIR },
              br:    { path: BR_DIR },
             ## note: reserve cl for country code for Chile!! - why? why not?
              europe_cl:  { path: EUROPE_CL_DIR },
@@ -112,10 +114,13 @@ end
 
 DATASETS.each do |key,h|
   task :"read_#{key}" => :config do
+     start_time = Time.now   ## todo: use Timer? t = Timer.start / stop / diff etc. - why? why not?
+
      ## SportDb.read( h[:path] )
      ## note: only incl. latest season for now
      latest = ['2018/19', '2019',
-               '2019/20', '2020']
+               '2019/20', '2020',
+               '2020/21']
      ## for all start with 2010/11 season for now
      all    = ['2010/11',
                '2011/12',
@@ -127,9 +132,22 @@ DATASETS.each do |key,h|
                '2017/18',
                '2018/19', '2019',
                '2019/20', '2020']
-     SportDb.read( h[:path], season: all )
+     SportDb.read( h[:path], season: latest )
+
+     SportDb.tables   ## print some stats
+
+     ## dump logs if any
+     puts "db logs (#{LogDb::Models::Log.count})"
+     LogDb::Models::Log.order(:id).each do |log|
+        puts "  [#{log.level}] #{log.ts}  - #{log.msg}"
+     end
+
+     end_time = Time.now
+     diff_time = end_time - start_time
+     puts "read_#{key}: done in #{diff_time} sec(s)"
   end
 end
+
 
 ## note: :ru not working for now (fix date e.g. [])
 task :read_all => DATASETS.keys.map {|key|:"read_#{key}" } do
@@ -151,12 +169,16 @@ task :json => :config  do       ## for in-memory depends on all for now - ok??
                FOOTBALL_JSON_DIR
              end
 
-  SportDb::JsonExporter.export( 'at.1',   out_root: out_root )   ###  todo/fix: check for stages starting in 2018/19
-  SportDb::JsonExporter.export( 'at.2',   out_root: out_root )
+  if ['all', 'at'].include?( DATA_KEY )
+    SportDb::JsonExporter.export( 'at.1',   out_root: out_root )   ###  todo/fix: check for stages starting in 2018/19
+    SportDb::JsonExporter.export( 'at.2',   out_root: out_root )
+  end
 
-  SportDb::JsonExporter.export( 'de.1',   out_root: out_root )
-  SportDb::JsonExporter.export( 'de.2',   out_root: out_root )
-  SportDb::JsonExporter.export( 'de.3',   out_root: out_root )
+  if ['all', 'de'].include?( DATA_KEY )
+    SportDb::JsonExporter.export( 'de.1',   out_root: out_root )
+    SportDb::JsonExporter.export( 'de.2',   out_root: out_root )
+    SportDb::JsonExporter.export( 'de.3',   out_root: out_root )
+  end
 
   SportDb::JsonExporter.export( 'eng.1',  out_root: out_root )
   SportDb::JsonExporter.export( 'eng.2',  out_root: out_root )
@@ -178,18 +200,40 @@ task :json => :config  do       ## for in-memory depends on all for now - ok??
   ## from world/ datasets
   SportDb::JsonExporter.export( 'nl.1',   out_root: out_root ) # Netherlands
 
+  SportDb::JsonExporter.export( 'be.1',   out_root: out_root ) # Belgium
+
   SportDb::JsonExporter.export( 'pt.1',   out_root: out_root ) # Portugal
 
   SportDb::JsonExporter.export( 'ch.1',   out_root: out_root ) # Switzerland
   SportDb::JsonExporter.export( 'ch.2',   out_root: out_root )
 
+  SportDb::JsonExporter.export( 'cz.1',   out_root: out_root ) # Czech Republic
+
+  SportDb::JsonExporter.export( 'hu.1',   out_root: out_root ) # Hungary
+
+  SportDb::JsonExporter.export( 'gr.1',   out_root: out_root ) # Greece
+
   SportDb::JsonExporter.export( 'tr.1',   out_root: out_root ) # Turkey
   SportDb::JsonExporter.export( 'tr.2',   out_root: out_root )
 
 
+  SportDb::JsonExporter.export( 'sco.1',   out_root: out_root ) # Scotland
+
+  SportDb::JsonExporter.export( 'ar.1',   out_root: out_root ) # Argentina
+
+  SportDb::JsonExporter.export( 'cn.1',   out_root: out_root ) # China
+
+  SportDb::JsonExporter.export( 'jp.1',   out_root: out_root ) # Japan
+
+  SportDb::JsonExporter.export( 'au.1',   out_root: out_root ) # Australia
+
+
   ###################
   ## more
+  SportDb::JsonExporter.export( 'mx.1',  out_root: out_root )
+
   SportDb::JsonExporter.export( 'br.1',  out_root: out_root )
+
 
   #########
   ## clubs int'l  (incl. group/group phase)

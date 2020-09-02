@@ -38,18 +38,21 @@ resulting in:
 ```
 
 
-**Alternative II - Use the Gitti Setup Script**
+**Alternative II - Use the `mono` Setup Script  (Recommended)**
 
 Use
 
 ```
-$ ruby ./setup.rb
+$ mono up
 ```
 
-to setup (sync e.g. clone/pull) all repos (configured in [`repos.yml`](repos.yml))
-to the `../..` (root) folder
-assuming your working folder is `yorobot/football.json`
-where you have cloned this very repo.
+to setup (sync e.g. clone or pull with fast forward merge) all repos (configured in [`monorepo.yml`](monorepo.yml))
+to the monorepo / mono source tree (root) folder
+(defaulting to `/sites` for now).
+
+Find out more about [the `mono` (short `mo`) command line tool »](https://github.com/sportdb/sport.db/tree/master/monos)
+
+
 
 
 ## Step 2 - Build sport.db From the Sources

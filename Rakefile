@@ -18,7 +18,6 @@ EN_DIR        = "#{OPENFOOTBALL_DIR}/england"
 ES_DIR        = "#{OPENFOOTBALL_DIR}/espana"
 IT_DIR        = "#{OPENFOOTBALL_DIR}/italy"
 FR_DIR        = "#{OPENFOOTBALL_DIR}/france"
-RU_DIR        = "#{OPENFOOTBALL_DIR}/russia"
 WORLD_DIR     = "#{OPENFOOTBALL_DIR}/world"   # incl. netherlands, portugal, switzerland, turkey, etc.
 
 BR_DIR        = "#{OPENFOOTBALL_DIR}/brazil"
@@ -32,7 +31,6 @@ DATASETS = {
              es:    { path: ES_DIR },
              it:    { path: IT_DIR },
              fr:    { path: FR_DIR },
-             ru:    { path: RU_DIR },
              world: { path: WORLD_DIR },
 
              mx:    { path: MX_DIR },

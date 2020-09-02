@@ -1,3 +1,13 @@
+## hack: use "local" dev monoscript too :-) for now
+$LOAD_PATH.unshift( 'C:/Sites/sportdb/sport.db/monos/lib' )
+
+## note: use the local version of sportdb-source gem
+require 'mono/sportdb'
+Mono.setup   # setup load path
+
+
+#### todo/fix: move all boot code/stuff for sharing/reuse to mono/sportdb!!!
+
 $RUBYLIBS_DEBUG = true
 
 def debug?
@@ -11,29 +21,17 @@ end
 
 
 
-SPORTDB_DIR      = '../../sportdb'     # path to libs
-
-## note: use the local version of sportdb gems
-$LOAD_PATH.unshift( File.expand_path( "#{SPORTDB_DIR}/sport.db/sportdb-langs/lib" ))
-$LOAD_PATH.unshift( File.expand_path( "#{SPORTDB_DIR}/sport.db/sportdb-formats/lib" ))
+SPORTDB_DIR      = "#{Mono.root}/sportdb"     # path to libs
+OPENFOOTBALL_DIR = "#{Mono.root}/openfootball"
 
 # $LOAD_PATH.unshift( File.expand_path( "#{SPORTDB_DIR}/football.db/footballdb-leagues/lib" ))
 # $LOAD_PATH.unshift( File.expand_path( "#{SPORTDB_DIR}/football.db/footballdb-clubs/lib" ))
 
-$LOAD_PATH.unshift( File.expand_path( "#{SPORTDB_DIR}/sport.db/sportdb-catalogs/lib" ))
-$LOAD_PATH.unshift( File.expand_path( "#{SPORTDB_DIR}/sport.db/sportdb-models/lib" ))
-$LOAD_PATH.unshift( File.expand_path( "#{SPORTDB_DIR}/sport.db/sportdb-sync/lib" ))
-$LOAD_PATH.unshift( File.expand_path( "#{SPORTDB_DIR}/sport.db/sportdb-readers/lib" ))
-
 require 'sportdb/readers'
 
 ### add exporters (e.g. json)
-$LOAD_PATH.unshift( File.expand_path( "../sport.db.more/sportdb-exporters/lib" ))
 require 'sportdb/exporters'
 
-
-
-OPENFOOTBALL_DIR = "../../openfootball"
 
 ## use (switch to) latest "external" datasets
 SportDb::Import.config.leagues_dir = "#{OPENFOOTBALL_DIR}/leagues"

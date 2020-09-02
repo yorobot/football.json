@@ -2,8 +2,8 @@
 #  checkout skripts (auto-update machinery)
 yorobot:
 - football.json      ## incl. self
-- logs
 - sport.db.more      ## JsonExporter
+- logs
 
 ###############
 #  use latest sportdb machinery (from source)
@@ -24,7 +24,6 @@ openfootball:
 - espana
 - italy
 - france
-- russia
 - brazil
 - mexico
 - world     ## incl. switzerland, turkey, etc.

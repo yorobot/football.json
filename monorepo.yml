@@ -11,6 +11,10 @@ sportdb:
 - sport.db
 - football.db
 
+rubycoco:
+- monos
+- gitti
+
 #####################
 # football.db - open football
 openfootball:

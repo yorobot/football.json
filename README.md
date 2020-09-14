@@ -50,7 +50,7 @@ to setup (sync e.g. clone or pull with fast forward merge) all repos (configured
 to the monorepo / mono source tree (root) folder
 (defaulting to `/sites` for now).
 
-Find out more about [the `mono` (short `mo`) command line tool »](https://github.com/sportdb/sport.db/tree/master/monos)
+Find out more about [the `mono` (short `mo`) command line tool »](https://github.com/rubycoco/monos)
 
 
 
@@ -63,7 +63,7 @@ Use
 $ rake build
 ```
 
-to build a fresh copy from scratch / zero.
+to build a fresh database copy (`./build/all.db`) from scratch / zero.
 
 
 ## Step 3 - Generate football.json Datasets
@@ -74,14 +74,35 @@ For testing / debugging use:
 $ rake json DEBUG=t
 ```
 
-that will write all datasets into the `./build` directory.
+that will write all datasets into the `./o` debug output directory.
 And use
 
 ```
 $ rake json
 ```
 
-for writing into the `openfootball/football.json` directory.
+for writing into the `openfootball/football.json`
+(release output / production) directory.
+
+
+
+
+## More Examples
+
+
+Build database (`./build/at.db`) for datasets for Austria (`at`) only
+
+```
+$ rake build DATA=at
+```
+
+Write all datasets for Austria (`at`) only to the `./o` debug output directory:
+
+```
+$ rake json DATA=at DEBUG=true
+```
+
+
 
 
 

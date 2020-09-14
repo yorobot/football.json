@@ -45,6 +45,9 @@ FOOTBALL_JSON_DIR = "#{OPENFOOTBALL_DIR}/football.json"
 
 
 BUILD_DIR = "./build"
+OUT_DIR   = "./o"        ## output dir for testing/debugging - note: NOT used for release only for debug (rename to DEBUG_OUT_DIR or such - why? why not?)
+TMP_DIR   = "./tmp"
+
 
 DATA_KEY = ENV['DATA'] || ENV['DATASET'] || 'all'     ## note: was 'worldcup' default DATA_KEY
 puts "  using DATA_KEY >#{DATA_KEY}<"
@@ -162,21 +165,20 @@ end
 
 task :json => :config  do       ## for in-memory depends on all for now - ok??
   out_root = if debug?
-               BUILD_DIR
+               OUT_DIR   ## e.g. use './o'  -- was: BUILD_DIR (./build)
              else
                FOOTBALL_JSON_DIR
              end
 
-  if ['all', 'at'].include?( DATA_KEY )
-    SportDb::JsonExporter.export( 'at.1',   out_root: out_root )   ###  todo/fix: check for stages starting in 2018/19
-    SportDb::JsonExporter.export( 'at.2',   out_root: out_root )
-  end
+  SportDb::JsonExporter.export( 'at.1',   out_root: out_root )   ###  todo/fix: check for stages starting in 2018/19
+  SportDb::JsonExporter.export( 'at.2',   out_root: out_root )
+  SportDb::JsonExporter.export( 'at.cup', out_root: out_root )
 
-  if ['all', 'de'].include?( DATA_KEY )
-    SportDb::JsonExporter.export( 'de.1',   out_root: out_root )
-    SportDb::JsonExporter.export( 'de.2',   out_root: out_root )
-    SportDb::JsonExporter.export( 'de.3',   out_root: out_root )
-  end
+  SportDb::JsonExporter.export( 'de.1',   out_root: out_root )
+  SportDb::JsonExporter.export( 'de.2',   out_root: out_root )
+  SportDb::JsonExporter.export( 'de.3',   out_root: out_root )
+  SportDb::JsonExporter.export( 'de.cup', out_root: out_root )
+
 
   SportDb::JsonExporter.export( 'eng.1',  out_root: out_root )
   SportDb::JsonExporter.export( 'eng.2',  out_root: out_root )
@@ -263,28 +265,23 @@ end
 ############
 #  push github
 task :push do
-    ## todo/fix:
-    ##  check if any changes (only push if changes commits - how??)
-
     path = FOOTBALL_JSON_DIR
     msg  = "auto-update week #{Date.today.cweek}"
 
     puts "Dir.getwd: #{Dir.getwd}"
-    Dir.chdir( path ) do
+    Gitti::GitProject.open( path ) do |proj|
       ## trying to update
       puts ''
       puts "###########################################"
       puts "## trying to commit & push repo in path >#{path}<"
       puts "Dir.getwd: #{Dir.getwd}"
-      result = system( "git status" )
-      pp result
-      result = system( "git add ." )
-      pp result
-      result = system( %Q{git commit -m "#{msg}"} )
-      pp result
-      result = system( "git push" )
-      pp result
-      ## todo: check return code
+      if proj.changes?
+        proj.add( '.' )
+        proj.commit( msg )
+        proj.push
+      else
+        puts "  - no changes -"
+      end
     end
     puts "Dir.getwd: #{Dir.getwd}"
 end

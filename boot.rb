@@ -44,7 +44,14 @@ DB_CONFIG = {
 
 
 def connect
-  ## todo/fix:  exit if database does NOT exist already!!!
+  ## note: for now SQLite database (single-file) MUST exit already;
+  #           use build to create from scratch/zero
+  unless File.exist?( DB_CONFIG[:database] )
+    STDERR.puts "!! ERROR - SQLite database >#{DB_CONFIG[:database]}< not found; sorry - use build to build from scratch/zero"
+    exit 1
+  end
+
+
   SportDb.connect( DB_CONFIG )
 
   logger = LogUtils::Logger.root
@@ -58,6 +65,17 @@ end
 
 
 def build( datasets=DATASETS )
+  if File.exist?( DB_CONFIG[:database] )
+    STDERR.puts "!! WARN - SQLite database >#{DB_CONFIG[:database]}<  found; removing and (re)building from scratch/zero"
+
+    ## mv to <time.now.to_i>.tmp before deleting
+    timestamp = Time.now.to_i
+    FileUtils.mv( DB_CONFIG[:database], "#{DB_CONFIG[:database]}-#{timestamp}.tmp" )
+    FileUtils.rm( "#{DB_CONFIG[:database]}-#{timestamp}.tmp" )
+  end
+
+
+
   ## todo/fix:  warn/exit if database exists already!!!
   SportDb.connect( DB_CONFIG )
   SportDb.create_all

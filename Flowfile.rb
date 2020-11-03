@@ -52,10 +52,10 @@ end
 step :push do
   ## todo/fix: get utc date - possible?
   today = Date.today
-  msg  = "auto-update week #{today.cweek} / day #{today.yday} / on #{t.strftime('%A, %B %-d, %Y')}"
+  msg  = "auto-update week #{today.cweek} / day #{today.yday} / on #{today.strftime('%A, %B %-d, %Y')}"
 
-  puts "check for changes in >#{Mononame.real_path('football.json@openfootball')}<..."
   Mono.open( 'football.json@openfootball' ) do |proj|
+    puts "check for changes (to commit & push) in >#{Dir.pwd}<:"
     if proj.changes?
       proj.add( '.' )
       proj.commit( msg )

@@ -1,13 +1,21 @@
 
+##################
+#  sync   (that is, clone repo if new or fast-forward if repo exists)
+#
+#  todo/check:  add back shallow "fast-clone" with depth: 1 support - why? why not?
 
-step :clone do
+
+### todo/change
+##  rename step to [:setup,:up] - why? why not?
+
+step [:sync, :clone] do
   #############
   ### "deep" standard/ regular clone
   [
     # 'logs@yorobot',
     'football.json@openfootball',
   ].each do |repo|
-    Mono.clone( repo )
+    Mono.sync( repo )
   end
 
   ######
@@ -16,7 +24,7 @@ step :clone do
   [
     'sport.db.more@yorobot',
   ].each do |repo|
-    Mono.clone( repo, depth: 1 )
+    Mono.sync( repo )   ## was: Mono.clone( repo, depth: 1 )
   end
 
 
@@ -40,16 +48,16 @@ step :clone do
             'clubs',
            ]
   names.each do |name|
-    Mono.clone( "#{name}@openfootball", depth: 1 )
+    Mono.sync( "#{name}@openfootball" )  ## was: Mono.clone( "#{name}@openfootball", depth: 1 )
   end
 end
 
 
 
-##################
-#  push
+########################
+#  publish   (that is, commit & push if any changes)
 
-step :push do
+step [:publish, :pub, :push] do
   ## todo/fix: get utc date - possible?
   today = Date.today
   msg  = "auto-update week #{today.cweek} / day #{today.yday} / on #{today.strftime('%A, %B %-d, %Y')}"
@@ -93,12 +101,15 @@ end
 
 
 
-##  used by json export/generate task
-# FOOTBALL_JSON_DIR =  "./football.json"
 
 step :json do
-  # was task :json => :config
-  connect
+  out_root =  if debug?
+                './o'
+              else
+                Mononame.real_path( 'football.json@openfootball' )
+              end
+
+  connect   ## note: requires database connection
 
   [
     'at.1',  # Austria
@@ -162,7 +173,7 @@ step :json do
     'uefa.cl.quali',   # Champions League Quali(fications)
     'uefa.cl',         # Champions League
   ].each do |league|
-    SportDb::JsonExporter.export( league, out_root: Mononame.real_path( 'football.json@openfootball' ))
+    SportDb::JsonExporter.export( league, out_root: out_root )
   end
 end
 

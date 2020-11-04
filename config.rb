@@ -1,15 +1,3 @@
-
-###################
-## mods
-## -- champions league mods
-MODS = {
-'Arsenal   | Arsenal FC'    => 'Arsenal, ENG',
-'Liverpool | Liverpool FC'  => 'Liverpool, ENG',
-'Barcelona'                 => 'Barcelona, ESP',
-'Valencia'                  => 'Valencia, ESP'
-}
-
-
 ##########################
 ## seasons
 SEASON_LATEST = ['2018/19', '2019',
@@ -42,7 +30,7 @@ DATASETS = {
   it:             { name: 'italy' },
   europe:         { name: 'europe' },   # incl. netherlands, portugal, switzerland, turkey, etc.
   ## note: reserve cl for country code for Chile!! - why? why not?
-  europe_cl:      { name: 'europe-champions-league', mods: MODS },
+  europe_cl:      { name: 'europe-champions-league' },
 
   mx:             { name: 'mexico' },
   south_america:  { name: 'south-america' },
@@ -52,7 +40,4 @@ DATASETS = {
   euro:           { name: 'euro-cup' },
   worldcup:       { name: 'world-cup' },
 }
-
-
-
 

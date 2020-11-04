@@ -1,4 +1,5 @@
-# football.json Scripts
+# football.json (Auto-Update) Scripts
+
 
 
 ## Step 0 - Install Required Ruby Libraries / Gems
@@ -23,7 +24,7 @@ See [Bundler »](https://bundler.io/)
 ## Step 1 - Sync / Pull / Clone All Datasets
 
 ```
-$ yo clone
+$ yo sync
 ```
 
 resulting in something like:

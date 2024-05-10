@@ -2,6 +2,9 @@
 # exclude tmp folder
 tmp
 tmp/
+tmp2/
+tmp3/
+tmp4/
 
 ###############
 # exclude build folder

@@ -6,7 +6,7 @@ require "sportdb/exporters"
 
 DB_CONFIG = {
   adapter:   'sqlite3',
-  database:  "../../openfootball/euro/sport.db"
+  database:  "../../sportdb/sport.db/build/euro.db"
 }
 
 SportDb.connect( DB_CONFIG )

@@ -14,6 +14,8 @@ unless defined?( Mono )
     puts "[flow]   assume local (dev) setup for testing"
   else
     Mono.root = Dir.pwd
+ ## [flow] pwd: /home/runner/work/football.json/football.json
+ ## [flow] Mono.root: /home/runner/work/football.json/football.json
 
     ## for debugging print / walk mono (source) tree
     Mono.walk

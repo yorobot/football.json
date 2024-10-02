@@ -26,7 +26,7 @@ step [:sync, :clone] do
     'deutschland@openfootball',
     'italy@openfootball',
     'espana@openfootball',
-    'europe@openfootball'
+    'europe@openfootball',
     'austria@openfootball',
     'champions-league@openfootball',
   ].each do |repo|

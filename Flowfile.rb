@@ -54,3 +54,9 @@ step [:publish, :pub, :push] do
     end
   end
 end
+
+
+
+step :json do
+   genjson
+end

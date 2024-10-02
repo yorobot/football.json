@@ -41,9 +41,7 @@ jobs:
       run:  yo clone
 
     - name: Run gen json
-      # run:  yo -r ./boot.rb genjson
-      run:  ruby quick/generate.rb
+      run:  yo -r ./boot json
 
     - name: Run ssh_push
       run:  yo push
-

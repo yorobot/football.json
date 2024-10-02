@@ -14,9 +14,24 @@ $ bundle install
 to install all required ruby libraries / gems
 (listed in the [`Gemfile`](Gemfile)).
 
-
 New to ruby, bundler & friends?
 See [Bundler »](https://bundler.io/)
+
+
+Try the yo (yorobot) command-line tool:
+
+```
+$ yo -h
+```
+
+resulting in:
+
+```
+Usage: yo [options]
+    -f, --file, --flowfile FILE      Read FILE as a flowfile.
+    -r, --require NAME
+    -d, --debug
+```
 
 
 
@@ -43,18 +58,7 @@ resulting in something like:
 ```
 
 
-## Step 2 - Build sport.db From the Sources
-
-Use
-
-```
-$ yo -r ./boot build
-```
-
-to build a fresh database copy (`./build/all.db`) from scratch / zero.
-
-
-## Step 3 - Generate football.json Datasets
+## Step 2 - Generate football.json Datasets
 
 For testing / debugging use:
 
@@ -62,7 +66,7 @@ For testing / debugging use:
 $ yo -r ./boot json DEBUG=t
 ```
 
-that will write all datasets into the `./o` debug output directory.
+that will write all datasets into the `./tmp` debug output directory.
 And use
 
 ```
@@ -77,7 +81,6 @@ for writing into the `openfootball/football.json`
 
 ## Questions? Comments?
 
-Send them along to the
-[Open Sports & Friends Forum/Mailing List](http://groups.google.com/group/opensport).
-Thanks!
+Yes, you can. More than welcome.
+See [Help & Support »](https://github.com/openfootball/help)
 

@@ -49,15 +49,23 @@ require 'sportdb/quick'
 DATASETS = {
     'en.1'  =>  ['england',            '1-premierleague'],
     'en.2'  =>  ['england',            '2-championship'],
+    'en.3'  =>  ['england',            '3-league1'],
+    'en.4'  =>  ['england',            '4-league2'],
+
     'es.1'  =>  ['espana',             '1-liga'],
+    'es.2'  =>  ['espana',             '2-liga2'],
+
     'de.1'  =>  ['deutschland',        '1-bundesliga'],
     'de.2'  =>  ['deutschland',        '2-bundesliga2'],
+
     'it.1'  =>  ['italy',              '1-seriea'],
     'it.2'  =>  ['italy',              '2-serieb'],
+
     'fr.1'  =>  [['europe', 'france'], '1-ligue1'],
 
     'at.1'  =>  ['austria',                 '1-bundesliga'],
     'at.2'  =>  ['austria',                 '2-liga2'],
+
     'nl.1'  =>  [['europe', 'netherlands'], '1-eredivisie'],
     'pt.1'  =>  [['europe', 'portugal'],    '1-primeiraliga'],
 

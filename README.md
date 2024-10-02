@@ -27,7 +27,7 @@ $ yo -h
 resulting in:
 
 ```
-Usage: yo [options]
+Usage: yo [options] STEP
     -f, --file, --flowfile FILE      Read FILE as a flowfile.
     -r, --require NAME
     -d, --debug

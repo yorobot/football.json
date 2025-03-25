@@ -26,9 +26,13 @@ step [:sync, :clone] do
     'deutschland@openfootball',
     'italy@openfootball',
     'espana@openfootball',
-    'europe@openfootball',
     'austria@openfootball',
+
     'champions-league@openfootball',
+
+    'europe@openfootball',
+    'south-america@openfootball',
+    'world@openfootball',   ## add world
   ].each do |repo|
     Mono.sync( repo )   ## was: Mono.clone( repo, depth: 1 )
   end

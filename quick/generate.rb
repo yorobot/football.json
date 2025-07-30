@@ -59,7 +59,7 @@ DATASETS = {
     'de.2'  =>  ['deutschland',        '2-bundesliga2'],
 
     'it.1'  =>  ['italy',              '1-seriea'],
-    'it.2'  =>  ['italy',              '2-serieb'],
+#    'it.2'  =>  ['italy',              '2-serieb'],
 
     'at.1'  =>  ['austria',            '1-bundesliga'],
     'at.2'  =>  ['austria',            '2-liga2'],

@@ -67,25 +67,25 @@ DATASETS = {
     'fr.1'  =>  [['europe', 'france']],
     'fr.2'  =>  [['europe', 'france']],
 
-    'nl.1'  =>  [['europe', 'netherlands']],
-    'be.1'  =>  [['europe', 'belgium']],
-    'pt.1'  =>  [['europe', 'portugal']],
-    'sco.1' =>  [['europe', 'scotland']],
-    'gr.1'  =>  [['europe', 'greece']],
-    'tr.1'  =>  [['europe', 'turkey']],
+#    'nl.1'  =>  [['europe', 'netherlands']],
+#    'be.1'  =>  [['europe', 'belgium']],
+#    'pt.1'  =>  [['europe', 'portugal']],
+#    'sco.1' =>  [['europe', 'scotland']],
+#    'gr.1'  =>  [['europe', 'greece']],
+#    'tr.1'  =>  [['europe', 'turkey']],
 
-    'uefa.cl'  =>  ['champions-league',  'cl'],
+#    'uefa.cl'  =>  ['champions-league',  'cl'],
 
     ## add africa
-    'ma.1'  =>  [['world', 'africa/morocco']],
-    'eg.1'  =>  [['world', 'africa/egypt']],
-    'dz.1'  =>  [['world', 'africa/algeria']],
+#    'ma.1'  =>  [['world', 'africa/morocco']],
+#    'eg.1'  =>  [['world', 'africa/egypt']],
+#    'dz.1'  =>  [['world', 'africa/algeria']],
 
     ## add north-america
-    'mx.1'  =>  [['world', 'north-america/mexico']],
+#    'mx.1'  =>  [['world', 'north-america/mexico']],
 
     ## add pacific
-    'au.1'    =>  [['world', 'pacific/australia']],
+#    'au.1'    =>  [['world', 'pacific/australia']],
   }
 
 
@@ -110,7 +110,7 @@ pp DATASETS_II
 def genjson( debug: debug? )
   # seasons = %w[2020/21 2021/22 2022/23 2023/24 2024/25]
 
-  _genjson( DATASETS,    seasons: %w[2024/25], debug: debug )
+  _genjson( DATASETS,    seasons: %w[2025/26], debug: debug )
   _genjson( DATASETS_II, seasons: %w[2025],    debug: debug )
 end
 

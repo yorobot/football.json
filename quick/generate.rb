@@ -45,7 +45,7 @@ end
 require 'sportdb/quick'
 
 
-# '2024-25',
+# '2025-26',
 DATASETS = {
     'en.1'  =>  ['england',            '1-premierleague'],
     'en.2'  =>  ['england',            '2-championship'],
@@ -59,7 +59,7 @@ DATASETS = {
     'de.2'  =>  ['deutschland',        '2-bundesliga2'],
 
     'it.1'  =>  ['italy',              '1-seriea'],
-#    'it.2'  =>  ['italy',              '2-serieb'],
+    'it.2'  =>  ['italy',              '2-serieb'],
 
     'at.1'  =>  ['austria',            '1-bundesliga'],
     'at.2'  =>  ['austria',            '2-liga2'],
@@ -67,12 +67,12 @@ DATASETS = {
     'fr.1'  =>  [['europe', 'france']],
     'fr.2'  =>  [['europe', 'france']],
 
-#    'nl.1'  =>  [['europe', 'netherlands']],
-#    'be.1'  =>  [['europe', 'belgium']],
-#    'pt.1'  =>  [['europe', 'portugal']],
-#    'sco.1' =>  [['europe', 'scotland']],
-#    'gr.1'  =>  [['europe', 'greece']],
-#    'tr.1'  =>  [['europe', 'turkey']],
+    'nl.1'  =>  [['europe', 'netherlands']],
+    'be.1'  =>  [['europe', 'belgium']],
+    'pt.1'  =>  [['europe', 'portugal']],
+    'sco.1' =>  [['europe', 'scotland']],
+    'gr.1'  =>  [['europe', 'greece']],
+    'tr.1'  =>  [['europe', 'turkey']],
 
 #    'uefa.cl'  =>  ['champions-league',  'cl'],
 

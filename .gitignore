@@ -24,9 +24,3 @@ o/
 #####################
 # exclude git/gitti logs
 errors.log
-
-####
-#  note:
-#   exclude gemfile.lock for now (is different for now on every os/platform)
-
-Gemfile.lock

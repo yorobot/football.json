@@ -34,7 +34,10 @@ step [:sync, :clone] do
     'south-america@openfootball',
     'world@openfootball',   ## add world
   ].each do |repo|
-    Mono.sync( repo )   ## was: Mono.clone( repo, depth: 1 )
+    ###
+    ## was - Mono.sync( repo )
+    ##  (re)try clone --depth=1 again
+    Mono.clone( repo, depth: 1 )
   end
 end
 

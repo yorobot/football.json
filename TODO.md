@@ -1,5 +1,34 @@
 # Todos
 
+
+- [ ]
+
+     yorobot -  do NOT load flowfile on adduser - why? why not?
+        and do NOT load flowfile on init {owner}/{repo}
+                      by default pick-up  GITHUB_REPOSITORY - why? why not?
+         add to yorobot built-in
+         new  init / bootstrap / checkout / clone ??  {owner}/{repo}
+
+-- circular -  NOT actions/setup-ruby  still requires checked out Gemfile/Gemfile.lock
+     thus, no point in trying to checkout (bootstrap) repo
+     because  yorobot is not yet operational (installed with bundle install!!!)
+
+maybe try ai query with:
+
+```
+hello. i am designing a new workflow. can you suggest good names for a workflow step  for the  setup/clone (with depth=1) of the initial github repo  if the workflow has steps such as adduser, clone, publish, etc.?
+
+
+yes, maybe keep with github and use simply checkout !!!
+
+adduser
+checkout    ###   check if .ssh present otherwise use https:// - why? why not?
+```
+
+
+- [ ]  use setup  for   adduser & init/bootstrap/clone/cloneself
+         find a good name for the workflow step
+
 - [ ]  add to flowfile --depth=1 option for clone
          how?
 - [ ]  add a debug/dump step e.g.  yo dump/debug/???

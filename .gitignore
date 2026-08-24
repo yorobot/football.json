@@ -22,5 +22,6 @@ o/
 
 
 #####################
-# exclude git/gitti logs
+# exclude logs
 errors.log
+logs.txt

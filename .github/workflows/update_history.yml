@@ -1,12 +1,7 @@
 
-name: Update datasets (2026/27,2026)
+name: Update datasets (history)
 
 on:
-  schedule:
-    # note: * is a special character in YAML so you have to quote this string
-    #  see cron guru for more examples / help on syntax
-    #    ->  https://crontab.guru/examples.html
-    - cron:  '0 5 * * *'       #  every day at 5 am (utc?)
   workflow_dispatch:
     ### for testing / debugging allow "manual" start
 
@@ -46,8 +41,9 @@ jobs:
     - name: Run ssh_clone
       run:  bundle exec yo clone
 
+    ###   change ./boot to ./boot_history !!!!
     - name: Run gen json
-      run:  bundle exec yo -r ./boot json
+      run:  bundle exec yo -r ./boot_history json
 
     - name: Run ssh_push
       run:  bundle exec yo push

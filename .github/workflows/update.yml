@@ -20,7 +20,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - uses: ruby/setup-ruby@v1
       with:
@@ -32,20 +32,22 @@ jobs:
       env:
         SSH_KEY: ${{ secrets.SSH_KEY }}
       run: |
+        #  note - ruby setup bundle install uses local vendor install
+        #              NOT into default
         # bundle install
-        gem list
+        # gem list
         # gem env
         #   get (latest) script sources -- add to mono tree layout
         git clone https://github.com/sportdb/sport.db.v2 sportdb/sport.db.v2
-        yo adduser
+        bundle exec yo adduser
 
 
     ## note: only (auto-)require config.rb (and NOT boot.rb) for clone/push
     - name: Run ssh_clone
-      run:  yo clone
+      run:  bundle exec yo clone
 
     - name: Run gen json
-      run:  yo -r ./boot json
+      run:  bundle exec yo -r ./boot json
 
     - name: Run ssh_push
-      run:  yo push
+      run:  bundle exec yo push

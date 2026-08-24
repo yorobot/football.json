@@ -42,7 +42,23 @@ end
   puts "Mono.root: #{Mono.root}"
 
 
-require 'sportdb/quick'
+
+
+
+##  note:  use local version of lexer/parser/documet
+### use/add $LOAD_PATH.push !!!
+## quick hack
+##   if available always use latest (local) source version
+
+puts "check LOAD_PATH:"
+pp $LOAD_PATH
+
+$LOAD_PATH.unshift( "#{Mono.root}/sportdb/sport.db.v2/lexer/lib" )
+$LOAD_PATH.unshift( "#{Mono.root}/sportdb/sport.db.v2/parser/lib" )
+$LOAD_PATH.unshift( "#{Mono.root}/sportdb/sport.db.v2/document/lib" )
+
+require 'fbtxt/document'
+
 
 
 # '2025-26',
@@ -89,14 +105,14 @@ DATASETS = {
   }
 
 
-##########  
+##########
 ### season is calendar year
 DATASETS_II = {
     'mls'    => [['world',          'north-america/major-league-soccer' ]],
-    'ar.1'   => [['south-america',  'argentina']], 
+    'ar.1'   => [['south-america',  'argentina']],
     'br.1'   => [['south-america',  'brazil']],
     'br.2'   => [['south-america',  'brazil']],
-    'co.1'   => [['south-america',  'colombia']], 
+    'co.1'   => [['south-america',  'colombia']],
     'copa.l' => [['south-america',  'copa-libertadores' ]],
 
     'jp.1'   => [['world',   'asia/japan']],
@@ -104,20 +120,44 @@ DATASETS_II = {
 }
 
 
+
+
+## quick fix
+#    try season = '2026/27'
+DATASETS_26 = {
+    'en.1'  =>  ['england',            '1-premierleague'],
+    'en.2'  =>  ['england',            '2-championship'],
+
+    'es.1'  =>  ['espana',             '1-liga'],
+    'de.1'  =>  ['deutschland',        '1-bundesliga'],
+    'it.1'  =>  ['italy',              '1-seriea'],
+    'fr.1'  =>  [['europe', 'france']],
+
+    'nl.1'  =>  [['europe', 'netherlands']],
+    'pt.1'  =>  [['europe', 'portugal']],
+}
+
+
+
 pp DATASETS
 pp DATASETS_II
+
+pp DATASETS_26
+
 
 def genjson( debug: debug? )
   # seasons = %w[2020/21 2021/22 2022/23 2023/24 2024/25]
 
-  _genjson( DATASETS,    seasons: %w[2025/26], debug: debug )
-  _genjson( DATASETS_II, seasons: %w[2025],    debug: debug )
+  ## _genjson( DATASETS,    seasons: %w[2025/26], debug: debug )
+  ## _genjson( DATASETS_II, seasons: %w[2025],    debug: debug )
+
+  _genjson( DATASETS_26, seasons: %w[2026/27],    debug: debug )
 end
 
 
 
-def _genjson( datasets=DATASETS, seasons:,
-                                 debug: debug? )
+def _genjson( datasets, seasons:,
+                        debug: debug? )
 
   root_dir = "#{Mono.root}/openfootball"
 
@@ -134,7 +174,7 @@ def _genjson( datasets=DATASETS, seasons:,
         path   +=  "/#{repo_path}"  if repo_path
 
         if  basename.nil?   ## assume flat outpath style for seasons
-                            ##    e.g.   2024-25_fr1.txt 
+                            ##    e.g.   2024-25_fr1.txt
           basename = key.gsub( '.', '' )
           path +=  "/#{season.to_path}"  ## auto-add season path
           path +=  "_#{basename}.txt"
@@ -148,15 +188,12 @@ def _genjson( datasets=DATASETS, seasons:,
         puts path
 
         if File.exist?( path )
-          txt = read_text( path )
-          quick = SportDb::QuickMatchReader.new( txt )
-          matches = quick.parse
-          name    = quick.league_name   ## quick hack - get league+season via league_name
+          doc = Fbtxt::Document.read( path )
 
-          pp matches[0,1]
+          pp doc.matches[0,1]
           data = {
-              'name'    => name,
-              'matches' => matches.map {|match| match.as_json }  # convert to json
+              'name'    => doc.title,
+              'matches' => doc.matches.as_json     # convert to json
           }
           write_json( "#{out_dir}/#{season.to_path}/#{key}.json", data )
         end
@@ -171,4 +208,3 @@ if __FILE__ == $0
   genjson( debug: true )
   puts "bye"
 end
-
